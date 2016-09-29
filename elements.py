@@ -8,6 +8,7 @@ class Elements:
     def __str__(self):
         return self._exp + ";"
 
+    # Add Element to container and add to .exp string
     def add(self, element):
         self._exp += str(element)
         self.elements.append(element)

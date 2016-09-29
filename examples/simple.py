@@ -26,4 +26,3 @@ model.add(CountBlock(counter))
 model.add(DisposeBlock())
 
 model.compile()
-
