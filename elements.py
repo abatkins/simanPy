@@ -3,7 +3,7 @@ class Elements:
     def __init__(self, exp):
         self._exp = exp
         self.elements = []
-        self.ext = "exp"
+        self.type = "exp"
 
     def __str__(self):
         return self._exp + ";"
@@ -20,7 +20,7 @@ class Project(Elements):
 
 
 class Replicate(Elements):
-    def __init__(self, num_replications, begin_time, replication_len, init_system, init_stats, warmup_period):
+    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="", warmup_period=""):
         exp = "REPLICATE, %s, %s, %s, %s, %s, %s" % (
             str(num_replications), str(begin_time), str(replication_len),
             str(init_system), str(init_stats), str(warmup_period)
@@ -47,14 +47,9 @@ class End(Elements):
 
 
 class Queues(Elements):
-
     def __init__(self):
         exp = "QUEUES"
         super().__init__(exp)
-
-    def add(self, number="", name="", ranking_criterion=""):
-        e = _Queue(number, name, ranking_criterion)
-        super().add(e)
 
 
 class Resources(Elements):
@@ -62,19 +57,11 @@ class Resources(Elements):
         exp = "RESOURCES"
         super().__init__(exp)
 
-    def add(self, number="", name="", capacity=""):
-        e = _Resource(number, name, capacity)
-        super().add(e)
-
 
 class Counters(Elements):
     def __init__(self):
         exp = "COUNTERS"
         super().__init__(exp)
-
-    def add(self, number, name, limit, init_option, output_file, report_id):
-        e = _Counter(number, name, limit, init_option, output_file, report_id)
-        super().add(e)
 
 
 # SIMAN does not define Entities as Elements. But, programatically very similar.
@@ -83,55 +70,60 @@ class Entities(Elements):
         exp = "ENTITIES"
         super().__init__(exp)
 
-    def add(self, name):
-        e = _Entity(name)
-        super().add(e)
 
 """ELEMENT STORAGE CLASSES"""
 # todo: should these classes just be a dict or list?
 class _Element:
     """Base Element storage class"""
 
+    def __init__(self, attributes):
+        self.attributes = attributes
+
     def __str__(self):
-        return ': ' + ', '.join(str(x) for x in self.__dict__.values())
+        return ': ' + ', '.join(str(x) for x in self.attributes)
 
 
-class _Queue(_Element):
+class Queue(_Element):
     """Queue storage class"""
     def __init__(self, number="", name="", ranking_criterion=""):
         self.number = number
         self.name = name
         self.ranking_criterion = ranking_criterion
-        super().__init__()
+
+        attributes = [number, name, ranking_criterion]
+        super().__init__(attributes)
 
 
-class _Resource(_Element):
+class Resource(_Element):
     """Resource storage class"""
     def __init__(self, number="", name="", capacity=""):
         self.number = number
         self.name = name
         self.capacity = capacity
-        super().__init__()
+
+        attributes = [number, name, capacity]
+        super().__init__(attributes)
 
 
-class _Counter(_Element):
+class Counter(_Element):
     """Counter storage class"""
-    def __init__(self, number, name, limit, init_option, output_file, report_id):
+    def __init__(self, number="", name="", limit="", init_option="", output_file="", report_id=""):
         self.number = number
         self.name = name
         self.limit = limit
         self.init_option = init_option
         self.output_file = output_file
         self.report_id = report_id
-        super().__init__()
+
+        attributes = [number, name, limit, init_option, output_file, report_id]
+        super().__init__(attributes)
+
 
 # todo: include other attributes
-class _Entity(_Element):
+class Entity(_Element):
     """Entity storage class"""
-    def __init__(self, name):
+    def __init__(self, name=""):
         self.name = name
-        super().__init__()
 
-q = Queues()
-q.add(1)
-print(q)
+        attributes = [name]
+        super().__init__(attributes)
