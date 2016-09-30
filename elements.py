@@ -8,10 +8,11 @@ class Elements:
     def __str__(self):
         return self._exp + ";"
 
-    # Add Element to container and add to .exp string
+    # Add Element (unique) to container and add to .exp string
     def add(self, element):
-        self._exp += str(element)
-        self.elements.append(element)
+        if element not in self.elements:
+            self._exp += str(element)
+            self.elements.append(element)
 
 
 class Project(Elements):
@@ -82,6 +83,25 @@ class _Element:
 
     def __str__(self):
         return ': ' + ', '.join(str(x) for x in self.attributes)
+
+    def __eq__(self, other):
+        if hasattr(self, 'number'):
+            return self.name == other.name and self.number == other.number
+        else:
+            return self.name == other.name
+
+    def __ne__(self, other):
+        if hasattr(self, 'number'):
+            return self.name != other.name or self.number != other.number
+        else:
+            return self.name != other.name
+
+    def __hash__(self):
+        if hasattr(self, 'number'):
+            return hash(('number', self.number, 'name', self.name))
+        else:
+            return hash(('name', self.name))
+
 
 
 class Queue(_Element):
