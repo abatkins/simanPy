@@ -9,6 +9,7 @@ class Elements:
         return self._exp + ";"
 
     # Add Element (unique) to container and add to .exp string
+    # todo: better formatting for Elements string. Should be multiline
     def add(self, element):
         if element not in self.elements:
             self._exp += str(element)
@@ -101,7 +102,6 @@ class _Element:
             return hash(('number', self.number, 'name', self.name))
         else:
             return hash(('name', self.name))
-
 
 
 class Queue(_Element):

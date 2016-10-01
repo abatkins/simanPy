@@ -12,31 +12,39 @@ class Model:
     # Allocates block and element data to correct file
     def add(self, obj):
         if obj.type == "mod":
-            if obj.element:
-                key = obj.element.__class__.__name__
-                if key == "Queue":
-                    collection = self.collections.get(key, Queues())
-                    collection.add(obj.element)
-                    self.collections[key] = collection
-                elif key == "Entity":
-                    collection = self.collections.get(key, Entities())
-                    collection.add(obj.element)
-                    self.collections[key] = collection
-                elif key == "Resource":
-                    collection = self.collections.get(key, Resources())
-                    collection.add(obj.element)
-                    self.collections[key] = collection
-                elif key == "Counter":
-                    collection = self.collections.get(key, Counters())
-                    collection.add(obj.element)
-                    self.collections[key] = collection
-                else:
-                    raise ValueError("Class name not recongized!")
+            if hasattr(obj, "blocks") and obj.blocks:  # check if superblock
+                for block in obj.blocks:
+                    self._add_element(block)
+            else:  # normal block
+                self._add_element(obj)
             self.mod.append(obj)
-        elif obj.type == "exp":
+        elif obj.type == "exp":  # Element block
             self.exp.append(obj)
         else:
             raise ValueError("Extension type %s is not recognized" % obj.type)
+
+    # Adds element stored in blocks
+    def _add_element(self, obj):
+        if hasattr(obj, "element") and obj.element:
+            key = obj.element.__class__.__name__
+            if key == "Queue":
+                collection = self.collections.get(key, Queues())
+                collection.add(obj.element)
+                self.collections[key] = collection
+            elif key == "Entity":
+                collection = self.collections.get(key, Entities())
+                collection.add(obj.element)
+                self.collections[key] = collection
+            elif key == "Resource":
+                collection = self.collections.get(key, Resources())
+                collection.add(obj.element)
+                self.collections[key] = collection
+            elif key == "Counter":
+                collection = self.collections.get(key, Counters())
+                collection.add(obj.element)
+                self.collections[key] = collection
+            else:
+                raise ValueError("Class name not recognized!")
 
     # Writes to SIMAN files
     def compile(self):
