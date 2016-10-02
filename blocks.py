@@ -84,7 +84,21 @@ class BranchBlock(Block):
         add_list = [branch_type, condition, destination_label]
         super().add(add_list)
 
-# class Assign(Block):
+
+# todo: determine how this affects the .exp. Does another var/attr need to be added?
+# todo: Should name string be passed or the element object?
+class Assign(Block):
+    """Name can be a SIMAN variable or attribute.
+    Used for modifying an existing variable or attribute element"""
+    def __init__(self, name, value):
+        attributes = (name, value)
+        mod = 'ASSIGN: {} = {}'.format(attributes)
+        super().__init__(mod)
+
+    # For Repeats
+    def add(self, name, value):
+        add_list = [name, value]
+        super().add(add_list)
 
 
 class DisposeBlock(Block):
