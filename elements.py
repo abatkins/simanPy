@@ -32,8 +32,9 @@ class Replicate(Elements):
 
 
 class Discrete(Elements):
-    def __init__(self, max_entities):
-        exp = "DISCRETE, %s" % str(max_entities)
+    def __init__(self, max_entities, max_attr, max_queue_num, max_station_num, animation_attr):
+        attributes = (max_entities, max_attr, max_queue_num, max_station_num, animation_attr)
+        exp = 'DISCRETE, {}, {}, {}, {}, {}'.format(attributes)
         super().__init__(exp)
 
 
@@ -64,6 +65,17 @@ class Resources(Elements):
 class Counters(Elements):
     def __init__(self):
         exp = "COUNTERS"
+        super().__init__(exp)
+
+
+class Attributes(Elements):
+    def __init__(self):
+        exp = "ATTRIBUTES"
+        super().__init__(exp)
+
+class Variables(Elements):
+    def __init__(self):
+        exp = "VARIABLES"
         super().__init__(exp)
 
 
@@ -139,6 +151,25 @@ class Counter(_Element):
         attributes = [number, name, limit, init_option, output_file, report_id]
         super().__init__(attributes)
 
+
+class Attribute(Elements):
+    def __init__(self, number="", name="", init_values=""):
+        self.number = number
+        self.name = name
+        self.init_values = init_values
+
+        attributes = (number, name, init_values)
+        super().__init__(attributes)
+
+
+class Variable(Elements):
+    def __init__(self, number="", name="", init_values=""):
+        self.number = number
+        self.name = name
+        self.init_values = init_values
+
+        attributes = (number, name, init_values)
+        super().__init__(attributes)
 
 # todo: include other attributes
 class Entity(_Element):

@@ -43,6 +43,14 @@ class Model:
                 collection = self.collections.get(key, Counters())
                 collection.add(obj.element)
                 self.collections[key] = collection
+            elif key == "Attribute":
+                collection = self.collections.get(key, Attributes())
+                collection.add(obj.element)
+                self.collections[key] = collection
+            elif key == "Variable":
+                collection = self.collections.get(key, Variables())
+                collection.add(obj.element)
+                self.collections[key] = collection
             else:
                 raise ValueError("Class name not recognized!")
 
