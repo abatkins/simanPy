@@ -40,6 +40,12 @@ class QueueBlock(Block):
         super().__init__(mod, queue)
 
 
+class TallyBlock(Block):
+    def __init__(self, tally, value, num_obs):
+        attributes = (tally, value, num_obs)
+        mod = 'TALLY: {}, {}, {}'.format(attributes)
+        super().__init__(mod)
+
 class SeizeBlock(Block):
     def __init__(self, resource, priority="", num_units=""):
         mod = "SEIZE, %s: %s, %s" % (str(priority), str(resource.name), str(num_units))
@@ -87,7 +93,7 @@ class BranchBlock(Block):
 
 # todo: determine how this affects the .exp. Does another var/attr need to be added?
 # todo: Should name string be passed or the element object?
-class Assign(Block):
+class AssignBlock(Block):
     """Name can be a SIMAN variable or attribute.
     Used for modifying an existing variable or attribute element"""
     def __init__(self, name, value):
