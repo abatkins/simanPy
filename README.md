@@ -3,7 +3,9 @@ Python Interface for Siman Simulation Lanaguage
 
 This project is still under active development. Please create an issue for bugs.
 
-Note: User must have SIMAN installed on the machine.
+## Dependencies
+* Must have SIMAN installed on the machine.
+* Python 3
 
 ## Getting Started
 
