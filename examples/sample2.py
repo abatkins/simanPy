@@ -4,7 +4,7 @@ from elements import *
 
 # Initialize model
 model = Model("sample2")
-model.add(Project(title="sample2", analyst_name="Alex Atkins"))
+model.add(Project(title="Sample2 Project", analyst_name="Your Name"))
 model.add(Replicate(num_replications=1, begin_time=0, replication_len=5000, warmup_period=1000))
 
 # Define Resources

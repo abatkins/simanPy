@@ -42,8 +42,7 @@ class QueueBlock(Block):
 
 class TallyBlock(Block):
     def __init__(self, tally, value, num_obs):
-        attributes = (tally, value, num_obs)
-        mod = 'TALLY: {}, {}, {}'.format(attributes)
+        mod = 'TALLY: {}, {}, {}'.format(tally, value, num_obs)
         super().__init__(mod)
 
 class SeizeBlock(Block):
@@ -97,8 +96,7 @@ class AssignBlock(Block):
     """Name can be a SIMAN variable or attribute.
     Used for modifying an existing variable or attribute element"""
     def __init__(self, name, value):
-        attributes = (name, value)
-        mod = 'ASSIGN: {} = {}'.format(attributes)
+        mod = 'ASSIGN: {} = {}'.format(name, value)
         super().__init__(mod)
 
     # For Repeats

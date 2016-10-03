@@ -32,16 +32,14 @@ class Replicate(_Elements):
 
 
 class Discrete(_Elements):
-    def __init__(self, max_entities, max_attr, max_queue_num, max_station_num, animation_attr):
-        attributes = (max_entities, max_attr, max_queue_num, max_station_num, animation_attr)
-        exp = 'DISCRETE, {}, {}, {}, {}, {}'.format(attributes)
+    def __init__(self, max_entities="", max_attr="", max_queue_num="", max_station_num="", animation_attr=""):
+        exp = 'DISCRETE, {}, {}, {}, {}, {}'.format(max_entities, max_attr, max_queue_num, max_station_num, animation_attr)
         super().__init__(exp)
 
 
 class Trace(_Elements):
-    def __init__(self, begin_time, end_time, condition, expression):
-        attributes = (begin_time, end_time, condition, expression)
-        exp = 'TRACE, {}, {}, {}, {}'.format(attributes)
+    def __init__(self, begin_time="", end_time="", condition="", expression=""):
+        exp = 'TRACE, {}, {}, {}, {}'.format(begin_time, end_time, condition, expression)
         super().__init__(exp)
 
 
@@ -263,6 +261,7 @@ class Seed(_Element):
 
         attributes = (identifier, seed_value, init_option)
         super().__init__(attributes)
+
 
 
 # todo: include other attributes

@@ -1,0 +1,9 @@
+BEGIN, , ;
+PROJECT, Sample1 Project, Your Name, , ;
+DISCRETE, 100, , , , ;
+REPLICATE, 1, 0, 480, , , ;
+RESOURCES: , Machine, ;
+COUNTERS: , JobsDone, , , , ;
+QUEUES: , Buffer, FIFO;
+ENTITIES: ;
+END;

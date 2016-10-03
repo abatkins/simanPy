@@ -1,0 +1,8 @@
+BEGIN, , ;
+PROJECT, Sample2 Project, Your Name, , ;
+REPLICATE, 1, 0, 5000, , , 1000;
+COUNTERS: , Part1, , , , : , Part2, , , , : , TotalEntities, , , , ;
+QUEUES: , Drill.Queue, : , Straighten.Queue, : , Finish.Queue, ;
+RESOURCES: , Drill, 2: , Straightener, 1: , Finisher, 1;
+ENTITIES: Part1: Part2;
+END;
