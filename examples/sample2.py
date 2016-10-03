@@ -77,5 +77,3 @@ model.add(CountBlock(counterTotal))
 model.add(DisposeBlock())
 
 model.compile()
-
-
