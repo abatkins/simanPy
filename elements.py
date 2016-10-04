@@ -127,7 +127,8 @@ class _Entities(_Elements):
 class _Element:
     """Base Element storage class"""
 
-    def __init__(self, attributes):
+    def __init__(self, name, attributes):
+        self.name = name
         self.attributes = attributes
 
     def __str__(self):
@@ -156,111 +157,100 @@ class Queue(_Element):
     """Queue storage class"""
     def __init__(self, number="", name="", ranking_criterion=""):
         self.number = number
-        self.name = name
         self.ranking_criterion = ranking_criterion
 
         attributes = [number, name, ranking_criterion]
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Resource(_Element):
     """Resource storage class"""
     def __init__(self, number="", name="", capacity=""):
         self.number = number
-        self.name = name
         self.capacity = capacity
 
         attributes = [number, name, capacity]
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Counter(_Element):
     """Counter storage class"""
     def __init__(self, number="", name="", limit="", init_option="", output_file="", report_id=""):
         self.number = number
-        self.name = name
         self.limit = limit
         self.init_option = init_option
         self.output_file = output_file
         self.report_id = report_id
 
         attributes = [number, name, limit, init_option, output_file, report_id]
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Attribute(_Elements):
     def __init__(self, number="", name="", init_values=""):
         self.number = number
-        self.name = name
         self.init_values = init_values
 
         attributes = (number, name, init_values)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Variable(_Elements):
     def __init__(self, number="", name="", init_values=""):
         self.number = number
-        self.name = name
         self.init_values = init_values
 
         attributes = (number, name, init_values)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Dstat(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
         self.number = number
-        self.name = name
         self.expression = expression
         self.output_file = output_file
         self.report_id = report_id
 
         attributes = (number, name, expression, output_file, report_id)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Tally(_Element):
     def __init__(self, number="", name="", output_file="", report_id=""):
         self.number = number
-        self.name = name
         self.output_file = output_file
         self.report_id = report_id
 
         attributes = (number, name, output_file, report_id)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 class Storage(_Element):
     def __init__(self, number="", name=""):
         self.number = number
-        self.name = name
 
         attributes = (number, name)
-        super().__init__(attributes)
-
+        super().__init__(name, attributes)
 
 class Output(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
         self.number = number
-        self.name = name
         self.expression = expression
         self.output_file = output_file
         self.report_id = report_id
 
         attributes = (number, name, expression, output_file, report_id)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):
     def __init__(self, name="", seed_value="", init_option=""):
-        self.name = name
         self.seed_value = seed_value
         self.init_option = init_option
 
         attributes = (name, seed_value, init_option)
-        super().__init__(attributes)
+        super().__init__(name, attributes)
 
 
 
@@ -268,7 +258,5 @@ class Seed(_Element):
 class Entity(_Element):
     """Entity storage class"""
     def __init__(self, name=""):
-        self.name = name
-
         attributes = [name]
-        super().__init__(attributes)
+        super().__init__(name, attributes)

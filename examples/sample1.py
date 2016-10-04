@@ -10,17 +10,17 @@ model.add(Replicate(num_replications=1, begin_time=0, replication_len=480))
 entity = Entity(name="Part")
 model.add(CreateBlock(entity, interval="EXPO(4.4)"))
 
-queue = Queue(number=1, name="Buffer", ranking_criterion="FIFO")
-model.add(QueueBlock(queue, capacity=100))
+queue = Queue(name="Buffer", ranking_criterion="FIFO")
+model.add(QueueBlock(queue))
 
-resource = Resource(number=1, name="Machine")
+resource = Resource(name="Machine")
 model.add(SeizeBlock(resource))
 
 model.add(DelayBlock("TRIA(3.2,4.2,5.2)"))
 
 model.add(ReleaseBlock(resource))
 
-counter = Counter(number=1, name="JobsDone")
+counter = Counter(name="JobsDone")
 model.add(CountBlock(counter))
 
 model.add(DisposeBlock())

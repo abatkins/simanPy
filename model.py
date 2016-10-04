@@ -30,38 +30,46 @@ class Model:
             key = obj.element.__class__.__name__
             if key == "Queue":
                 collection = self.collections.get(key, _Queues())
-                collection.add(obj.element)
-                self.collections[key] = collection
-            elif key == "Entity":
-                collection = self.collections.get(key, _Entities())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Resource":
                 collection = self.collections.get(key, _Resources())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Counter":
                 collection = self.collections.get(key, _Counters())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Attribute":
                 collection = self.collections.get(key, _Attributes())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Variable":
                 collection = self.collections.get(key, _Variables())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Dstat":
                 collection = self.collections.get(key, _Dstats())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Tally":
                 collection = self.collections.get(key, _Tallies())
+                obj.element.number = len(collection.elements) + 1
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Storage":
                 collection = self.collections.get(key, _Storages())
+                obj.element.number = len(collection.elements) + 1
+                collection.add(obj.element)
+                self.collections[key] = collection
+            elif key == "Entity":
+                collection = self.collections.get(key, _Entities())
                 collection.add(obj.element)
                 self.collections[key] = collection
             elif key == "Output":
