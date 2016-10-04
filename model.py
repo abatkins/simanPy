@@ -1,6 +1,5 @@
 from elements import _Begin, _End, _Queues, _Entities, _Counters, _Resources, _Attributes, _Variables, _Dstats, \
     _Tallies, _Storages, _Outputs
-
 import subprocess
 
 
@@ -82,17 +81,38 @@ class Model:
 
         return mod_filename, exp_filename
 
-    def link(self, mod_file, exp_file):
-        subprocess.run("linker %s %s" % (mod_file, exp_file), shell=True, check=True)
+    # Run model.exe
+    def run_mod(self, input_file, output_file=None):
+        if not output_file:
+            output_file = input_file.split('.')[0] + '.m'
+        subprocess.run('model {} {}'.format(input_file, output_file), shell=True, check=True)
+        return output_file
 
-    def run_siman(self):
-        p_filename = self.filename + '.p'
-        subprocess.run("siman %s" % p_filename, shell=True, check=True)
+    # Run expmt.exe
+    def run_expmt(self, input_file, output_file=None):
+        if not output_file:
+            output_file = input_file.split('.')[0] + '.e'
+        subprocess.run('expmt {} {}'.format(input_file, output_file),shell=True, check=True)
+        return output_file
 
+    # Run linker.exe
+    def run_link(self, mod_file, exp_file, output_file=None):
+        if not output_file:
+            output_file = mod_file.split('.')[0] + '.p'
+        subprocess.run('linker {} {} {}'.format(mod_file, exp_file, output_file), shell=True, check=True)
+        return output_file
+
+    # Run siman.exe
+    def run_siman(self, input_file):
+        subprocess.run('siman {}'.format(input_file), shell=True, check=True)
+
+    # Run Simulation
     def run(self):
         mod_filename, exp_filename = self.compile()
-        self.link(mod_filename, exp_filename)
-        self.run_siman()
+        m_filename = self.run_mod(mod_filename)
+        e_filename = self.run_expmt(exp_filename)
+        p_filename = self.run_link(m_filename, e_filename)
+        self.run_siman(p_filename)
 
     def _to_file(self,filename, objs):
         file = open(filename, 'w')
