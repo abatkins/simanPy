@@ -254,12 +254,12 @@ class Output(_Element):
 
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):
-    def __init__(self, identifier="", seed_value="", init_option=""):
-        self.identifier = identifier
+    def __init__(self, name="", seed_value="", init_option=""):
+        self.name = name
         self.seed_value = seed_value
         self.init_option = init_option
 
-        attributes = (identifier, seed_value, init_option)
+        attributes = (name, seed_value, init_option)
         super().__init__(attributes)
 
 

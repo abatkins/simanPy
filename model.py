@@ -83,7 +83,7 @@ class Model:
         return mod_filename, exp_filename
 
     def link(self, mod_file, exp_file):
-        subprocess.run("liner %s %s" % (mod_file, exp_file), shell=True, check=True)
+        subprocess.run("linker %s %s" % (mod_file, exp_file), shell=True, check=True)
 
     def run_siman(self):
         p_filename = self.filename + '.p'
