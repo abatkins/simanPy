@@ -1,4 +1,4 @@
-from elements import Queue
+from elements import Queue, Variable, Attribute
 # todo: fix add for seize and release to handle repeats
 # TODO: Add param class that simply returns discrete list of params for a given block/elem. Example: param.branchtype.if
 
@@ -44,6 +44,7 @@ class TallyBlock(Block):
     def __init__(self, tally, value, num_obs):
         mod = 'TALLY: {}, {}, {}'.format(tally, value, num_obs)
         super().__init__(mod)
+
 
 class SeizeBlock(Block):
     def __init__(self, resource, priority="", num_units=""):
@@ -95,9 +96,10 @@ class BranchBlock(Block):
 class AssignBlock(Block):
     """Name can be a SIMAN variable or attribute.
     Used for modifying an existing variable or attribute element"""
-    def __init__(self, name, value):
-        mod = 'ASSIGN: {} = {}'.format(name, value)
-        super().__init__(mod)
+    def __init__(self, var_or_attr, value):
+        assert isinstance(var_or_attr, (Attribute, Variable))
+        mod = 'ASSIGN: {} = {}'.format(var_or_attr.name, value)
+        super().__init__(mod, var_or_attr)
 
     # For Repeats
     def add(self, name, value):

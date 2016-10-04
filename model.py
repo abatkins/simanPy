@@ -36,25 +36,25 @@ class Model:
         if hasattr(obj, "element") and obj.element:
             key = obj.element.__class__.__name__
             if key == "Queue":
-                self._to_collection(key, _Queues, obj)
+                self._to_collection(key, _Queues(), obj)
             elif key == "Resource":
-                self._to_collection(key, _Resources, obj)
+                self._to_collection(key, _Resources(), obj)
             elif key == "Counter":
-                self._to_collection(key, _Counters, obj)
+                self._to_collection(key, _Counters(), obj)
             elif key == "Attribute":
-                self._to_collection(key, _Attributes, obj)
+                self._to_collection(key, _Attributes(), obj)
             elif key == "Variable":
-                self._to_collection(key, _Variables, obj)
+                self._to_collection(key, _Variables(), obj)
             elif key == "Dstat":
-                self._to_collection(key, _Dstats, obj)
+                self._to_collection(key, _Dstats(), obj)
             elif key == "Tally":
-                self._to_collection(key, _Tallies, obj)
+                self._to_collection(key, _Tallies(), obj)
             elif key == "Storage":
-                self._to_collection(key, _Storages, obj)
+                self._to_collection(key, _Storages(), obj)
             elif key == "Entity":
-                self._to_collection(key, _Entities, obj)
+                self._to_collection(key, _Entities(), obj)
             elif key == "Output":
-                self._to_collection(key, _Outputs, obj)
+                self._to_collection(key, _Outputs(), obj)
             else:
                 raise ValueError("Class name not recognized!")
 
