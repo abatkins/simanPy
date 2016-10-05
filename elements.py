@@ -207,7 +207,7 @@ class Dstat(_Element):
         self.output_file = output_file
         self.report_id = report_id
 
-        attributes = (name, expression, output_file, report_id)
+        attributes = (expression, name, output_file, report_id)
         super().__init__(name, attributes, number)
 
 
