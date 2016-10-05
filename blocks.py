@@ -1,6 +1,6 @@
 from elements import Queue, Variable, Attribute
-# todo: fix add for seize and release to handle repeats
 # TODO: Add param class that simply returns discrete list of params for a given block/elem. Example: param.branchtype.if
+# TODO: Better handling for modifiers like NEXT() and MARK(). Either set both independently or "add modifier" to pass both.
 
 
 class Block:
@@ -8,17 +8,19 @@ class Block:
         self._mod = mod
         self.type = 'mod'
         self.element = element
-        self._next = None
+        self._modifiers = None
 
     def __str__(self):
-        if self._next:
-            return self._mod + ': NEXT({});'.format(self._next.name)
+        if self._modifiers:
+            mod_string = ', '.join(self._modifiers)
+            return self._mod + ': {};'.format(mod_string)
         else:
             return self._mod + ";"
 
-    # Directly link successor block
-    def set_next(self, obj):
-        self._next = obj
+    # Add modifiers to block tail. EX: NEXT() / MARKS()
+    def set_modifiers(self, modifiers):
+        assert isinstance(modifiers, (list, tuple))
+        self._modifiers = modifiers
 
     # For Repeats
     # todo: better formatting for repeats. Dynamic padding.
