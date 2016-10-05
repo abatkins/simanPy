@@ -123,7 +123,6 @@ class _Entities(_Elements):
 
 
 """ELEMENT STORAGE CLASSES"""
-# todo: should these classes just be a dict or list?
 class _Element:
     """Base Element storage class"""
 
@@ -131,6 +130,7 @@ class _Element:
         self.name = name
         self.number = number
         self.attributes = attributes
+        self.type = "element"
 
     def __str__(self):
         num = str(self.number) + ', ' if self.number else ''
@@ -200,7 +200,7 @@ class Variable(_Elements):
         attributes = (name, init_values)
         super().__init__(name, attributes, number)
 
-# todo: handle dstat correctly. It goes into the DSTATS element, but is added directly to model...
+
 class Dstat(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
         self.expression = expression
@@ -224,6 +224,7 @@ class Storage(_Element):
     def __init__(self, number="", name=""):
         attributes = (name)
         super().__init__(name, attributes, number)
+
 
 class Output(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):

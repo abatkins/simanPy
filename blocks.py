@@ -43,7 +43,7 @@ class QueueBlock(Block):
 
 
 class TallyBlock(Block):
-    def __init__(self, tally, value, num_obs):
+    def __init__(self, tally, value, num_obs=""):
         mod = 'TALLY: {}, {}, {}'.format(tally, value, num_obs)
         super().__init__(mod)
 

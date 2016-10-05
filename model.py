@@ -15,48 +15,51 @@ class Model:
         if obj.type == "mod":
             if hasattr(obj, "blocks") and obj.blocks:  # check if superblock
                 for block in obj.blocks:
-                    self._add_element(block)
+                    if hasattr(block, "element") and block.element:
+                        self._add_element(block.element)
             else:  # normal block
-                self._add_element(obj)
+                if hasattr(obj, "element") and obj.element:
+                    self._add_element(obj.element)
             self.mod.append(obj)
-        elif obj.type == "exp":  # Element block
+        elif obj.type == "exp":  # Elements block
             self.exp.append(obj)
+        elif obj.type == "element":  # Element blockS
+            self._add_element(obj)
         else:
             raise ValueError("Extension type %s is not recognized" % obj.type)
 
-    def _to_collection(self, key, elements_inst, obj):
+    def _to_collection(self, key, elements_inst, element):
         collection = self.collections.get(key, elements_inst)
-        if obj.element.number == "":
-            obj.element.number = len(collection.elements) + 1
-        collection.add(obj.element)
+        if element.number == "":
+            element.number = len(collection.elements) + 1
+        collection.add(element)
         self.collections[key] = collection
 
     # Adds element stored in blocks
-    def _add_element(self, obj):
-        if hasattr(obj, "element") and obj.element:
-            key = obj.element.__class__.__name__
-            if key == "Queue":
-                self._to_collection(key, _Queues(), obj)
-            elif key == "Resource":
-                self._to_collection(key, _Resources(), obj)
-            elif key == "Counter":
-                self._to_collection(key, _Counters(), obj)
-            elif key == "Attribute":
-                self._to_collection(key, _Attributes(), obj)
-            elif key == "Variable":
-                self._to_collection(key, _Variables(), obj)
-            elif key == "Dstat":
-                self._to_collection(key, _Dstats(), obj)
-            elif key == "Tally":
-                self._to_collection(key, _Tallies(), obj)
-            elif key == "Storage":
-                self._to_collection(key, _Storages(), obj)
-            elif key == "Entity":
-                self._to_collection(key, _Entities(), obj)
-            elif key == "Output":
-                self._to_collection(key, _Outputs(), obj)
-            else:
-                raise ValueError("Class name not recognized!")
+    def _add_element(self, element):
+        key = element.__class__.__name__
+        if key == "Queue":
+            self._to_collection(key, _Queues(), element)
+        elif key == "Resource":
+            self._to_collection(key, _Resources(), element)
+        elif key == "Counter":
+            self._to_collection(key, _Counters(), element)
+        elif key == "Attribute":
+            self._to_collection(key, _Attributes(), element)
+        elif key == "Variable":
+            self._to_collection(key, _Variables(), element)
+        elif key == "Dstat":
+            self._to_collection(key, _Dstats(), element)
+        elif key == "Tally":
+            self._to_collection(key, _Tallies(), element)
+        elif key == "Storage":
+            self._to_collection(key, _Storages(), element)
+        elif key == "Entity":
+            self._to_collection(key, _Entities(), element)
+        elif key == "Output":
+            self._to_collection(key, _Outputs(), element)
+        else:
+            raise ValueError("Class name not recognized!")
 
     # Writes to SIMAN files
     def compile(self):
