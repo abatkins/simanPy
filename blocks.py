@@ -12,7 +12,7 @@ class Block:
 
     def __str__(self):
         if self._modifiers:
-            mod_string = ', '.join(self._modifiers)
+            mod_string = ': '.join(self._modifiers)
             return self._mod + ': {};'.format(mod_string)
         else:
             return self._mod + ";"
@@ -44,7 +44,7 @@ class QueueBlock(Block):
 
 class TallyBlock(Block):
     def __init__(self, tally, value, num_obs=""):
-        mod = 'TALLY: {}, {}, {}'.format(tally, value, num_obs)
+        mod = 'TALLY: {}, {}, {}'.format(tally.name, value, num_obs)
         super().__init__(mod)
 
 
