@@ -127,12 +127,14 @@ class _Entities(_Elements):
 class _Element:
     """Base Element storage class"""
 
-    def __init__(self, name, attributes):
+    def __init__(self, name, attributes, number=None):
         self.name = name
+        self.number = number
         self.attributes = attributes
 
     def __str__(self):
-        return ': ' + ', '.join(str(x) for x in self.attributes)
+        num = str(self.number) + ', ' if hasattr(self,'number') else ''
+        return ': ' + num + ', '.join(str(x) for x in self.attributes)
 
     def __eq__(self, other):
         if hasattr(self, 'number'):
@@ -156,81 +158,72 @@ class _Element:
 class Queue(_Element):
     """Queue storage class"""
     def __init__(self, number="", name="", ranking_criterion=""):
-        self.number = number
         self.ranking_criterion = ranking_criterion
 
-        attributes = [number, name, ranking_criterion]
-        super().__init__(name, attributes)
+        attributes = [name, ranking_criterion]
+        super().__init__(name, attributes, number)
 
 
 class Resource(_Element):
     """Resource storage class"""
     def __init__(self, number="", name="", capacity=""):
-        self.number = number
         self.capacity = capacity
 
-        attributes = [number, name, capacity]
-        super().__init__(name, attributes)
+        attributes = [name, capacity]
+        super().__init__(name, attributes, number)
 
 
 class Counter(_Element):
     """Counter storage class"""
     def __init__(self, number="", name="", limit="", init_option="", output_file="", report_id=""):
-        self.number = number
         self.limit = limit
         self.init_option = init_option
         self.output_file = output_file
         self.report_id = report_id
 
-        attributes = [number, name, limit, init_option, output_file, report_id]
-        super().__init__(name, attributes)
+        attributes = [name, limit, init_option, output_file, report_id]
+        super().__init__(name, attributes, number)
 
 
 class Attribute(_Elements):
     def __init__(self, number="", name="", init_values=""):
-        self.number = number
         self.init_values = init_values
 
-        attributes = (number, name, init_values)
-        super().__init__(name, attributes)
+        attributes = (name, init_values)
+        super().__init__(name, attributes, number)
 
 
 class Variable(_Elements):
     def __init__(self, number="", name="", init_values=""):
-        self.number = number
         self.init_values = init_values
 
-        attributes = (number, name, init_values)
-        super().__init__(name, attributes)
+        attributes = (name, init_values)
+        super().__init__(name, attributes, number)
 
 
 class Dstat(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
-        self.number = number
         self.expression = expression
         self.output_file = output_file
         self.report_id = report_id
 
-        attributes = (number, name, expression, output_file, report_id)
-        super().__init__(name, attributes)
+        attributes = (name, expression, output_file, report_id)
+        super().__init__(name, attributes, number)
 
 
 class Tally(_Element):
     def __init__(self, number="", name="", output_file="", report_id=""):
-        self.number = number
         self.output_file = output_file
         self.report_id = report_id
 
-        attributes = (number, name, output_file, report_id)
-        super().__init__(name, attributes)
+        attributes = (name, output_file, report_id)
+        super().__init__(name, attributes, number)
 
 
 class Storage(_Element):
     def __init__(self, number="", name=""):
-        self.number = number
-
-        attributes = (number, name)
-        super().__init__(name, attributes)
+        attributes = (name)
+        super().__init__(name, attributes, number)
 
 class Output(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
