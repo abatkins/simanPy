@@ -12,7 +12,7 @@ class Block:
 
     def __str__(self):
         if self._next:
-            return self._mod + ": %s;" % self._next.name
+            return self._mod + ': NEXT({});'.format(self._next.name)
         else:
             return self._mod + ";"
 
