@@ -26,7 +26,7 @@ class Model:
 
     def _to_collection(self, key, elements_inst, obj):
         collection = self.collections.get(key, elements_inst)
-        if hasattr(obj.element, "number") and obj.element.number == "":
+        if obj.element.number == "":
             obj.element.number = len(collection.elements) + 1
         collection.add(obj.element)
         self.collections[key] = collection

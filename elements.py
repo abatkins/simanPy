@@ -133,23 +133,23 @@ class _Element:
         self.attributes = attributes
 
     def __str__(self):
-        num = str(self.number) + ', ' if hasattr(self,'number') else ''
+        num = str(self.number) + ', ' if self.number else ''
         return ': ' + num + ', '.join(str(x) for x in self.attributes)
 
     def __eq__(self, other):
-        if hasattr(self, 'number'):
+        if self.number:
             return self.name == other.name and self.number == other.number
         else:
             return self.name == other.name
 
     def __ne__(self, other):
-        if hasattr(self, 'number'):
+        if self.number:
             return self.name != other.name or self.number != other.number
         else:
             return self.name != other.name
 
     def __hash__(self):
-        if hasattr(self, 'number'):
+        if self.number:
             return hash(('number', self.number, 'name', self.name))
         else:
             return hash(('name', self.name))
