@@ -200,7 +200,7 @@ class Variable(_Elements):
         attributes = (name, init_values)
         super().__init__(name, attributes, number)
 
-
+# todo: handle dstat correctly. It goes into the DSTATS element, but is added directly to model...
 class Dstat(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
         self.expression = expression
