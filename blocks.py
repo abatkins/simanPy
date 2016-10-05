@@ -45,7 +45,7 @@ class QueueBlock(Block):
 class TallyBlock(Block):
     def __init__(self, tally, value, num_obs=""):
         mod = 'TALLY: {}, {}, {}'.format(tally.name, value, num_obs)
-        super().__init__(mod)
+        super().__init__(mod, tally)
 
 
 class SeizeBlock(Block):
