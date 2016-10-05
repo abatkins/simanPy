@@ -185,7 +185,7 @@ class Counter(_Element):
         super().__init__(name, attributes, number)
 
 
-class Attribute(_Elements):
+class Attribute(_Element):
     def __init__(self, number="", name="", init_values=""):
         self.init_values = init_values
 
@@ -193,7 +193,7 @@ class Attribute(_Elements):
         super().__init__(name, attributes, number)
 
 
-class Variable(_Elements):
+class Variable(_Element):
     def __init__(self, number="", name="", init_values=""):
         self.init_values = init_values
 
