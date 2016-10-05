@@ -23,10 +23,10 @@ class Project(_Elements):
 
 
 class Replicate(_Elements):
-    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="", warmup_period=""):
+    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="", warmup_period="", base_time_unit=""):
         exp = "REPLICATE, %s, %s, %s, %s, %s, %s" % (
             str(num_replications), str(begin_time), str(replication_len),
-            str(init_system), str(init_stats), str(warmup_period)
+            str(init_system), str(init_stats), str(warmup_period), str(base_time_unit)
         )
         super().__init__(exp)
 
