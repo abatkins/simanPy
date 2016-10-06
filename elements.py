@@ -21,12 +21,13 @@ class Project(_Elements):
         exp = "PROJECT, %s, %s, %s, %s" % (str(title), str(analyst_name), str(date), str(summary_report))
         super().__init__(exp)
 
-
+# todo: find out what 3 missing params are
 class Replicate(_Elements):
-    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="", warmup_period="", base_time_unit=""):
-        exp = "REPLICATE, %s, %s, %s, %s, %s, %s, %s" % (
+    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="",
+                 warmup_period="", hours_per_day=24, base_time_unit=""):
+        exp = "REPLICATE, %s, %s, %s, %s, %s, %s, %s, %s" % (
             str(num_replications), str(begin_time), str(replication_len),
-            str(init_system), str(init_stats), str(warmup_period), str(base_time_unit)
+            str(init_system), str(init_stats), str(warmup_period), ',,,' + str(hours_per_day), str(base_time_unit)
         )
         super().__init__(exp)
 
