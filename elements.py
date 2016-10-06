@@ -27,7 +27,7 @@ class Replicate(_Elements):
                  warmup_period="", hours_per_day=24, base_time_unit=""):
         exp = "REPLICATE, %s, %s, %s, %s, %s, %s, %s, %s" % (
             str(num_replications), str(begin_time), str(replication_len),
-            str(init_system), str(init_stats), str(warmup_period), ',,,' + str(hours_per_day), str(base_time_unit)
+            str(init_system), str(init_stats), str(warmup_period), ',,' + str(hours_per_day), str(base_time_unit)
         )
         super().__init__(exp)
 
