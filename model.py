@@ -93,16 +93,19 @@ class Model:
         return output_file
 
     # Run siman.exe
-    def run_siman(self, input_file):
-        subprocess.run('siman {}'.format(input_file), shell=True, check=True)
+    def run_siman(self, input_file, suppress):
+        if suppress:
+            subprocess.run('siman {} > {}.out'.format(input_file, input_file.split('.')[0]), shell=True, check=True)
+        else:
+            subprocess.run('siman {}'.format(input_file), shell=True, check=True)
 
     # Run Simulation
-    def run(self):
+    def run(self, suppress=False):
         mod_filename, exp_filename = self.compile()
         m_filename = self.run_mod(mod_filename)
         e_filename = self.run_expmt(exp_filename)
         p_filename = self.run_link(m_filename, e_filename)
-        self.run_siman(p_filename)
+        self.run_siman(p_filename, suppress)
 
     def _to_file(self,filename, objs):
         file = open(filename, 'w')
