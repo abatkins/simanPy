@@ -25,7 +25,7 @@ class Block:
     # For Repeats
     # todo: better formatting for repeats. Dynamic padding.
     def add(self, add_list):
-        self._mod += ":\n\t\t%s, %s, %s" % tuple(str(x) for x in add_list)
+        self._mod += ':\n\t\t{}'.format((', '.join(add_list)))
 
 
 # todo: determine if element_ids should be passed to block as string or an object
@@ -84,12 +84,19 @@ class CountBlock(Block):
 
 class BranchBlock(Block):
     def __init__(self, branch_type, destination_label, max_branches="", rand_num_stream="", condition=""):
-        mod = "Branch, %s, %s: %s, %s, %s" % (str(max_branches), str(rand_num_stream), str(branch_type), str(condition), str(destination_label))
+        if branch_type.lower() in ["else", "always"]:
+            mod = 'Branch, {}, {}: {}, {}'.format(max_branches, rand_num_stream, branch_type, destination_label)
+        else:
+            mod = 'Branch, {}, {}: {}, {}, {}'.format(max_branches, rand_num_stream, branch_type, condition,
+                                                      destination_label)
         super().__init__(mod)
 
     # For Repeats
     def add(self, branch_type, destination_label, condition=""):
-        add_list = [branch_type, condition, destination_label]
+        if branch_type.lower() in ["else", "always"]:
+            add_list = [branch_type, destination_label]
+        else:
+            add_list = [branch_type, condition, destination_label]
         super().add(add_list)
 
 
