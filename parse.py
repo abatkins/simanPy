@@ -86,20 +86,34 @@ def aggregate_stats(data, alpha=.05):
             if 'average' in df_group.get_group(name).columns:
                 group_vals = df_group.get_group(name)['average']
             else:
-                group_vals = df_group.get_group(name)['count']
+                group_vals =  df_group.get_group(name)['count']
+            mean, ci = _compute_stats(group_vals)
 
-            mean = np.mean(group_vals)
-            if len(group_vals.unique()) > 1:  # Compute CI
-                lb, ub = stats.t.interval(1-alpha, len(group_vals) - 1, loc=mean, scale=stats.sem(group_vals))
-                ci = "({:.4f}, {:.4f})".format(float(lb), float(ub))
-            else:  # Don't bother with CI if all values are the same.
-                ci = "NA"
-            results.append([name, float(mean), ci])
+            if 'obs' in df_group.get_group(name).columns:
+                obs_vals = df_group.get_group(name)['obs']
+                obs_mean, obs_ci = _compute_stats(obs_vals)
+                print(obs_mean, obs_ci)
+            else:
+                obs_mean, obs_ci = None, None
+
+            results.append([name, mean, ci, obs_mean, obs_ci ])
     agg_df = pd.DataFrame(data=results,
-                          columns=['identifier', 'mean', '{}% Confidence Interval'.format(int((1-alpha)*100))])
+                          columns=['identifier',
+                                   'mean_average', '{}% Confidence Interval'.format(int((1-alpha)*100)),
+                                   'mean_obs', '{}% Confidence Interval'.format(int((1 - alpha) * 100))
+                                   ])
     agg_df.to_csv('aggregate.csv')
 
     return agg_df
+
+def _compute_stats(vals, alpha=.05):
+    mean = np.mean(vals)
+    if len(vals.unique()) > 1:  # Compute CI
+        lb, ub = stats.t.interval(1 - alpha, len(vals) - 1, loc=mean, scale=stats.sem(vals))
+        ci = "({:.4f}, {:.4f})".format(float(lb), float(ub))
+    else:  # Don't bother with CI if all values are the same.
+        ci = "NA"
+    return float(mean), ci
 
 if __name__ == "__main__":
     # Arg Parser
@@ -108,4 +122,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     data = parse(args.infile)
-    aggregate_stats(data, alpha=.05)
+    aggregate_stats(data)
