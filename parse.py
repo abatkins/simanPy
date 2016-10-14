@@ -92,7 +92,6 @@ def aggregate_stats(data, alpha=.05):
             if 'obs' in df_group.get_group(name).columns:
                 obs_vals = df_group.get_group(name)['obs']
                 obs_mean, obs_ci = _compute_stats(obs_vals)
-                print(obs_mean, obs_ci)
             else:
                 obs_mean, obs_ci = None, None
 
