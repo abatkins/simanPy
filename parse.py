@@ -76,6 +76,7 @@ def parse(infile):
     return data
 
 # Creates df/csv with aggregate statistics over all replications. Includes mean and confidence intervals.
+# Note: Use the to_latex method to output the df to a latex table.
 def aggregate_stats(data, alpha=.05):
     results = []
     for df in data.values():
