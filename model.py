@@ -63,11 +63,11 @@ class Model:
 
     # Writes to SIMAN files
     def compile(self):
-        self.exp += self.collections.values()
+        exp = list(self.collections.values()) + self.exp
         mod_filename = self.filename + ".mod"
         exp_filename = self.filename + ".exp"
         self._to_file(mod_filename, self.mod)
-        self._to_file(exp_filename, self.exp)
+        self._to_file(exp_filename, exp)
 
         return mod_filename, exp_filename
 
