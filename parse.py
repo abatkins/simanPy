@@ -118,7 +118,13 @@ if __name__ == "__main__":
     # Arg Parser
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('--infile', '-i', type=str, help='Input file')
+    parser.add_argument('--latex', '-l', action='store_true', help='Print Latex Table')
 
     args = parser.parse_args()
     data = parse(args.infile)
-    aggregate_stats(data)
+    agg = aggregate_stats(data)
+
+    if args.latex:
+        print(agg.to_latex())
+    else:
+        print(agg)
