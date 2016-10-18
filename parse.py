@@ -86,7 +86,7 @@ def aggregate_stats(data, alpha=.05):
             if 'average' in df_group.get_group(name).columns:
                 group_vals = df_group.get_group(name)['average']
             else:
-                group_vals =  df_group.get_group(name)['count']
+                group_vals = df_group.get_group(name)['count']
             mean, ci = _compute_stats(group_vals)
 
             if 'obs' in df_group.get_group(name).columns:
@@ -95,11 +95,25 @@ def aggregate_stats(data, alpha=.05):
             else:
                 obs_mean, obs_ci = None, None
 
-            results.append([name, mean, ci, obs_mean, obs_ci ])
+            if 'min' in df_group.get_group(name).columns:
+                min_vals = df_group.get_group(name)['min']
+                min_mean, min_ci = _compute_stats(min_vals)
+            else:
+                min_mean, min_ci = None, None
+
+            if 'max' in df_group.get_group(name).columns:
+                max_vals = df_group.get_group(name)['max']
+                max_mean, max_ci = _compute_stats(max_vals)
+            else:
+                max_mean, max_ci = None, None
+
+            results.append([name, mean, ci, min_mean, max_mean, obs_mean, obs_ci])
     agg_df = pd.DataFrame(data=results,
                           columns=['identifier',
-                                   'mean_average', '{}% Confidence Interval'.format(int((1-alpha)*100)),
-                                   'mean_obs', '{}% Confidence Interval'.format(int((1 - alpha) * 100))
+                                   'average', '{}% CI'.format(int((1-alpha)*100)),
+                                   'min',
+                                   'max',
+                                   'obs', '{}% CI'.format(int((1 - alpha) * 100))
                                    ])
     agg_df.to_csv('aggregate.csv')
 
@@ -112,7 +126,7 @@ def _compute_stats(vals, alpha=.05):
         ci = "({:.4f}, {:.4f})".format(float(lb), float(ub))
     else:  # Don't bother with CI if all values are the same.
         ci = "NA"
-    return float(mean), ci
+    return round(float(mean), 4), ci
 
 if __name__ == "__main__":
     # Arg Parser
