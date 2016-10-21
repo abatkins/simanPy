@@ -116,6 +116,54 @@ class AssignBlock(Block):
         super().add(add_list)
 
 
+class StationBlock(Block):
+    def __init__(self, begin_station_id, end_station_id):
+        mod = 'STATION, {}, {}'.format(begin_station_id, end_station_id)
+        super().__init__(mod)
+
+
+class RouteBlock(Block):
+    def __init__(self, duration, destination):
+        mod = 'ROUTE: {}, {}'.format(duration, destination)
+        super().__init__(mod)
+
+
+class RequestBlock(Block):
+    def __init__(self, priority, storage_id, alt_path, transporter_unit, velocity, entity_location):
+        mod = 'REQUEST, {}, {}, {}: {}, {}, {}'.format(priority, storage_id, alt_path, transporter_unit, velocity, entity_location)
+        super().__init__(mod)
+
+
+class TransportBlock(Block):
+    def __init__(self, alt_path, transporter_unit, destination, velocity, guided_trans_dest):
+        mod = 'TRANSPORT, {}, {}: {}, {}, {}, {}'.format(alt_path, transporter_unit, destination, velocity, guided_trans_dest)
+        super().__init__(mod)
+
+
+class FreeBlock(Block):
+    def __init__(self, transporter_unit):
+        mod = 'FREE: {}'.format(transporter_unit)
+        super().__init__(mod)
+
+
+class AllocateBlock(Block):
+    def __init__(self, priority, alt_path, transport_unit, entity_location):
+        mod = 'ALLOCATE: {}, {}: {}, {}'.format(priority, alt_path, transport_unit, entity_location)
+        super().__init__(mod)
+
+
+class MoveBlock(Block):
+    def __init__(self, storage_id, alt_path, transport_unit, destination, velocity):
+        mod = 'MOVE, {}, {}: {}, {}, {}'.format(storage_id, alt_path, transport_unit, destination, velocity)
+        super().__init__(mod)
+
+
+class HalthBlock(Block):
+    def __init__(self, transport_unit):
+        mod = 'HALT: {}'.format(transport_unit)
+        super().__init__(mod)
+
+
 class DisposeBlock(Block):
     def __init__(self):
         mod = "DISPOSE"

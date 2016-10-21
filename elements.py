@@ -18,17 +18,17 @@ class _Elements:
 
 class Project(_Elements):
     def __init__(self, title="", analyst_name="", date="", summary_report=""):
-        exp = "PROJECT, %s, %s, %s, %s" % (str(title), str(analyst_name), str(date), str(summary_report))
+        exp = "PROJECT, {}, {}, {}, {}".format(title, analyst_name, date, summary_report)
         super().__init__(exp)
+
 
 # todo: find out what 3 missing params are
 class Replicate(_Elements):
     def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="",
                  warmup_period="", hours_per_day=24, base_time_unit=""):
-        exp = "REPLICATE, %s, %s, %s, %s, %s, %s, %s, %s" % (
-            str(num_replications), str(begin_time), str(replication_len),
-            str(init_system), str(init_stats), str(warmup_period), ',,' + str(hours_per_day), str(base_time_unit)
-        )
+        exp = "REPLICATE, {}, {}, {}, {}, {}, {},,,{}, {}".format(num_replications, begin_time, replication_len,
+                                                                  init_system, init_stats, warmup_period, hours_per_day,
+                                                                  base_time_unit)
         super().__init__(exp)
 
 
@@ -112,7 +112,37 @@ class _Seeds(_Elements):
 
 class _Outputs(_Elements):
     def __init__(self):
-        exp = "Outputs"
+        exp = "OUTPUTS"
+        super().__init__(exp)
+
+
+class _Stations(_Elements):
+    def __init__(self):
+        exp = "STATIONS"
+        super().__init__(exp)
+
+
+class _Sequences(_Elements):
+    def __init__(self):
+        exp = "SEQUENCES"
+        super().__init__(exp)
+
+
+class _Transporters(_Elements):
+    def __init__(self):
+        exp = "TRANSPORTERS"
+        super().__init__(exp)
+
+
+#class _Distances(_Elements):
+#    def __init__(self):
+#        exp = "DISTANCES"
+#        super().__init__(exp)
+
+
+class Sets(_Elements):
+    def __init__(self):
+        exp = "SETS"
         super().__init__(exp)
 
 
@@ -238,6 +268,59 @@ class Output(_Element):
         super().__init__(name, attributes)
 
 
+class Station(_Element):
+    def __init__(self, number="", name="", intersection_id="", recipe_id=""):
+        self.number = number
+        self.intersection_id = intersection_id
+        self.recipe_id = recipe_id
+
+        attributes = (number, name, intersection_id, recipe_id)
+        super().__init__(name, attributes)
+
+
+class Sequence(_Element):
+    def __init__(self, number="", name="", station_id="", variable=None, value=None):
+        self.number = number
+        self.steps = [[station_id, variable, value]]
+
+        attributes = [number, name, self.to_string(station_id, variable, value)]
+        super().__init__(name, attributes)
+
+    def add(self, station_id="", variable="", value=""):
+        self.steps.append([station_id, variable, value])
+        self.attributes[2] += ' & ' + self.to_string(station_id, variable, value)
+
+    def to_string(self, station_id, variable, value):
+        if variable and value:
+            return '{}, {} = {}'.format(station_id, variable, value)
+        else:
+            return str(station_id)
+
+
+class Transporter(_Element):
+    def __init__(self, number="", name="", num_units="", system_map_type="", velocity=""):
+        self.number = number
+        self.num_units = num_units
+        self.system_map_type = system_map_type
+        self.velocity = velocity
+
+        attributes = (number, name, num_units, system_map_type, velocity)
+        super().__init__(name, attributes)
+
+
+#class Distance(_Element):
+#    def __init__(self, name, start_station_id, end_station_id, distance):
+
+class Set(_Element):
+    def __init__(self, number="", name="", members=[]):
+        assert isinstance(members, (tuple, list))
+
+        self.number = number
+        self.members = members
+
+        attributes = (number, name, ', '.join(members))
+        super().__init__(name, attributes)
+
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):
     def __init__(self, name="", seed_value="", init_option=""):
@@ -246,7 +329,6 @@ class Seed(_Element):
 
         attributes = (name, seed_value, init_option)
         super().__init__(name, attributes)
-
 
 
 # todo: include other attributes
