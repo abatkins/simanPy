@@ -31,14 +31,14 @@ class Block:
 # todo: determine if element_ids should be passed to block as string or an object
 class CreateBlock(Block):
     def __init__(self, entity, batch_size="", offset_time="", interval="", maximum_batches=""):
-        mod = "CREATE, %s, %s, %s: %s, %s" % (str(batch_size), str(offset_time), str(entity.name), str(interval), str(maximum_batches))
+        mod = 'CREATE, {}, {}, {}: {}, {}'.format(batch_size, offset_time, entity.name, interval, maximum_batches)
         super().__init__(mod, entity)
 
 
 class QueueBlock(Block):
     def __init__(self, queue, capacity="", balk_label=""):
         assert isinstance(queue, Queue)
-        mod = "QUEUE, %s, %s, %s" % (str(queue.name), str(capacity), str(balk_label))
+        mod = 'QUEUE, {}, {}, {}'.format(queue.name, capacity, balk_label)
         super().__init__(mod, queue)
 
 
@@ -49,8 +49,8 @@ class TallyBlock(Block):
 
 
 class SeizeBlock(Block):
-    def __init__(self, resource, priority="", num_units=""):
-        mod = "SEIZE, %s: %s, %s" % (str(priority), str(resource.name), str(num_units))
+    def __init__(self, resource, priority="", num_units=1):
+        mod = 'SEIZE, {}: {}, {}'.format(priority, resource.name, num_units)
         super().__init__(mod, resource)
 
     # For Repeats
@@ -61,13 +61,13 @@ class SeizeBlock(Block):
 
 class DelayBlock(Block):
     def __init__(self, duration="", storage_id=""):
-        mod = "DELAY: %s, %s" % (str(duration), str(storage_id))
+        mod = 'DELAY: {}, {}'.format(duration, storage_id)
         super().__init__(mod)
 
 
 class ReleaseBlock(Block):
-    def __init__(self, resource, quantity_to_release=""):
-        mod = "RELEASE: %s, %s" % (str(resource.name), str(quantity_to_release))
+    def __init__(self, resource, quantity_to_release=1):
+        mod = 'RELEASE: {}, {}'.format(resource.name, quantity_to_release)
         super().__init__(mod, resource)
 
     # For Repeats
@@ -78,7 +78,7 @@ class ReleaseBlock(Block):
 
 class CountBlock(Block):
     def __init__(self, counter, counter_increment=""):
-        mod = "COUNT: %s, %s" % (str(counter.name), str(counter_increment))
+        mod = 'COUNT: {}, {}'.format(counter.name, counter_increment)
         super().__init__(mod, counter)
 
 
