@@ -244,6 +244,7 @@ class Dstat(_Element):
 
 class Tally(_Element):
     def __init__(self, number="", name="", output_file="", report_id=""):
+        output_file = '"' + output_file + '"'
         self.output_file = output_file
         self.report_id = report_id
 
