@@ -30,7 +30,7 @@ class Block:
 
 # todo: determine if element_ids should be passed to block as string or an object
 class CreateBlock(Block):
-    def __init__(self, entity, batch_size="", offset_time="", interval="", maximum_batches=""):
+    def __init__(self, entity, batch_size=1, offset_time="", interval="", maximum_batches=""):
         mod = 'CREATE, {}, {}, {}: {}, {}'.format(batch_size, offset_time, entity.name, interval, maximum_batches)
         super().__init__(mod, entity)
 
@@ -43,13 +43,13 @@ class QueueBlock(Block):
 
 
 class TallyBlock(Block):
-    def __init__(self, tally, value, num_obs=""):
+    def __init__(self, tally, value, num_obs=1):
         mod = 'TALLY: {}, {}, {}'.format(tally.name, value, num_obs)
         super().__init__(mod, tally)
 
 
 class SeizeBlock(Block):
-    def __init__(self, resource, priority="", num_units=1):
+    def __init__(self, resource, priority=1.0, num_units=1):
         mod = 'SEIZE, {}: {}, {}'.format(priority, resource.name, num_units)
         super().__init__(mod, resource)
 
@@ -60,7 +60,7 @@ class SeizeBlock(Block):
 
 
 class DelayBlock(Block):
-    def __init__(self, duration="", storage_id=""):
+    def __init__(self, duration=0.0, storage_id=""):
         mod = 'DELAY: {}, {}'.format(duration, storage_id)
         super().__init__(mod)
 
@@ -77,7 +77,7 @@ class ReleaseBlock(Block):
 
 
 class CountBlock(Block):
-    def __init__(self, counter, counter_increment=""):
+    def __init__(self, counter, counter_increment=1):
         mod = 'COUNT: {}, {}'.format(counter.name, counter_increment)
         super().__init__(mod, counter)
 
@@ -123,19 +123,19 @@ class StationBlock(Block):
 
 
 class RouteBlock(Block):
-    def __init__(self, duration, destination):
+    def __init__(self, duration=0.0, destination=""):
         mod = 'ROUTE: {}, {}'.format(duration, destination)
         super().__init__(mod)
 
 
 class RequestBlock(Block):
-    def __init__(self, priority, storage_id, alt_path, transporter_unit, velocity, entity_location):
+    def __init__(self, priority=1, storage_id="", alt_path="", transporter_unit="", velocity="", entity_location=""):
         mod = 'REQUEST, {}, {}, {}: {}, {}, {}'.format(priority, storage_id, alt_path, transporter_unit, velocity, entity_location)
         super().__init__(mod)
 
 
 class TransportBlock(Block):
-    def __init__(self, alt_path, transporter_unit, destination, velocity, guided_trans_dest):
+    def __init__(self, alt_path="", transporter_unit="", destination="", velocity="", guided_trans_dest=""):
         mod = 'TRANSPORT, {}, {}: {}, {}, {}, {}'.format(alt_path, transporter_unit, destination, velocity, guided_trans_dest)
         super().__init__(mod)
 
@@ -147,13 +147,13 @@ class FreeBlock(Block):
 
 
 class AllocateBlock(Block):
-    def __init__(self, priority, alt_path, transport_unit, entity_location):
+    def __init__(self, priority=1, alt_path="", transport_unit="", entity_location=""):
         mod = 'ALLOCATE: {}, {}: {}, {}'.format(priority, alt_path, transport_unit, entity_location)
         super().__init__(mod)
 
 
 class MoveBlock(Block):
-    def __init__(self, storage_id, alt_path, transport_unit, destination, velocity):
+    def __init__(self, storage_id="", alt_path="", transport_unit="", destination="", velocity=""):
         mod = 'MOVE, {}, {}: {}, {}, {}'.format(storage_id, alt_path, transport_unit, destination, velocity)
         super().__init__(mod)
 

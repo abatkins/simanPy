@@ -24,8 +24,8 @@ class Project(_Elements):
 
 # todo: find out what 3 missing params are
 class Replicate(_Elements):
-    def __init__(self, num_replications="", begin_time="", replication_len="", init_system="", init_stats="",
-                 warmup_period="", hours_per_day=24, base_time_unit=""):
+    def __init__(self, num_replications=1, begin_time=0.0, replication_len="", init_system="Yes", init_stats="Yes",
+                 warmup_period=0.0, hours_per_day=24, base_time_unit=""):
         exp = "REPLICATE, {}, {}, {}, {}, {}, {},,,{}, {}".format(num_replications, begin_time, replication_len,
                                                                   init_system, init_stats, warmup_period, hours_per_day,
                                                                   base_time_unit)
@@ -39,13 +39,13 @@ class Discrete(_Elements):
 
 
 class Trace(_Elements):
-    def __init__(self, begin_time="", end_time="", condition="", expression=""):
+    def __init__(self, begin_time=0.0, end_time="", condition="", expression=""):
         exp = 'TRACE, {}, {}, {}, {}'.format(begin_time, end_time, condition, expression)
         super().__init__(exp)
 
 
 class _Begin(_Elements):
-    def __init__(self, listing="", run_controller=""):
+    def __init__(self, listing="Yes", run_controller="No"):
         exp = "BEGIN, %s, %s" % (str(listing), str(run_controller))
         super().__init__(exp)
 
@@ -188,7 +188,7 @@ class _Element:
 
 class Queue(_Element):
     """Queue storage class"""
-    def __init__(self, number="", name="", ranking_criterion=""):
+    def __init__(self, number="", name="", ranking_criterion="FIFO"):
         self.ranking_criterion = ranking_criterion
 
         attributes = [name, ranking_criterion]
@@ -197,7 +197,7 @@ class Queue(_Element):
 
 class Resource(_Element):
     """Resource storage class"""
-    def __init__(self, number="", name="", capacity=""):
+    def __init__(self, number="", name="", capacity=1):
         self.capacity = capacity
 
         attributes = [name, capacity]
@@ -297,15 +297,17 @@ class Sequence(_Element):
         else:
             return str(station_id)
 
-
+# todo: Fix string formatting. More complex than normal.
 class Transporter(_Element):
-    def __init__(self, number="", name="", num_units="", system_map_type="", velocity=""):
+    def __init__(self, number="", name="", num_units=1, system_map_type="", velocity=1.0, init_position="", init_status="Active"):
         self.number = number
         self.num_units = num_units
         self.system_map_type = system_map_type
         self.velocity = velocity
+        self.init_position = init_position
+        self.init_status = init_status
 
-        attributes = (number, name, num_units, system_map_type, velocity)
+        attributes = (number, name, num_units, system_map_type, velocity, init_position, init_status)
         super().__init__(name, attributes)
 
 
@@ -324,7 +326,7 @@ class Set(_Element):
 
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):
-    def __init__(self, name="", seed_value="", init_option=""):
+    def __init__(self, name="", seed_value="", init_option="No"):
         self.seed_value = seed_value
         self.init_option = init_option
 
