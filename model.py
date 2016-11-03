@@ -4,11 +4,13 @@ import subprocess
 
 
 class Model:
-    def __init__(self, filename):
+    def __init__(self, filename, run_controller="No"):
         self.filename = filename
         self.exp = []
         self.mod = []
         self.collections = {}
+        self.run_controller = run_controller
+
 
     # Allocates block and element data to correct file
     def add(self, obj):
@@ -109,7 +111,7 @@ class Model:
 
     def _to_file(self,filename, objs):
         file = open(filename, 'w')
-        file.write("%s\n" % str(_Begin()))
+        file.write("%s\n" % str(_Begin(run_controller=self.run_controller)))
         for obj in objs:
             file.write("%s\n" % obj)
         file.write(str(_End()))
