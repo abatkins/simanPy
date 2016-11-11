@@ -117,8 +117,11 @@ class AssignBlock(Block):
 
 
 class StationBlock(Block):
-    def __init__(self, begin_station_id, end_station_id):
-        mod = 'STATION, {}, {}'.format(begin_station_id, end_station_id)
+    def __init__(self, begin_station_id, end_station_id=None):
+        if end_station_id:
+            mod = 'STATION, {}, {}'.format(begin_station_id, end_station_id)
+        else:
+            mod = 'STATION, {}'.format(begin_station_id)
         super().__init__(mod)
 
 

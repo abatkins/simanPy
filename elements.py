@@ -270,7 +270,7 @@ class Output(_Element):
 
 
 class Station(_Element):
-    def __init__(self, number="", name="", intersection_id="", recipe_id=""):
+    def __init__(self, number, name="", intersection_id="", recipe_id=""):
         self.number = number
         self.intersection_id = intersection_id
         self.recipe_id = recipe_id

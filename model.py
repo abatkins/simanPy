@@ -1,5 +1,5 @@
 from elements import _Begin, _End, _Queues, _Entities, _Counters, _Resources, _Attributes, _Variables, _Dstats, \
-    _Tallies, _Storages, _Outputs
+    _Tallies, _Storages, _Outputs, _Stations
 import subprocess
 
 
@@ -60,6 +60,8 @@ class Model:
             self._to_collection(key, _Entities(), element)
         elif key == "Output":
             self._to_collection(key, _Outputs(), element)
+        elif key == "Station":
+            self._to_collection(key, _Stations(), element)
         else:
             raise ValueError("Class name not recognized!")
 
@@ -95,7 +97,7 @@ class Model:
         return output_file
 
     # Run siman.exe
-    def run_siman(self, input_file, suppress):
+    def run_siman(self, input_file, suppress=False):
         if suppress:
             subprocess.run('siman {} > {}.out'.format(input_file, input_file.split('.')[0]), shell=True, check=True)
         else:
