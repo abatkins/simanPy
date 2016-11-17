@@ -11,7 +11,6 @@ class Model:
         self.collections = {}
         self.run_controller = run_controller
 
-
     # Allocates block and element data to correct file
     def add(self, obj):
         if obj.type == "mod":

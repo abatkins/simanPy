@@ -116,6 +116,20 @@ class AssignBlock(Block):
         super().add(add_list)
 
 
+class SelectBlock(Block):
+    """Selects from a defined group of SEIZE blocks, each with an explicitly defined Resource
+       Thse SEIZE blocks are not preceded by their own individual QUEUE blocks, but share the QUEUE block preceding
+       the SELECT block.
+
+       Resource selection rules:
+       CYC (cyclic priority), RAN (RANdom priority), POR (preferred order rule), LNB (Largest Number Busy),
+       SNB (Smallest number busy), LRC (largest remaining capacity), SRC (smallest remaining capacity)
+       """
+    def __init__(self, resource_rule='CYC', seize_labels=[]):
+        mod = 'SELECT, {}: {}'.format(resource_rule, ': '.join(seize_labels))
+        super().__init__(mod)
+
+
 class StationBlock(Block):
     def __init__(self, begin_station_id, end_station_id=None):
         if end_station_id:
