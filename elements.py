@@ -140,7 +140,7 @@ class _Transporters(_Elements):
 #        super().__init__(exp)
 
 
-class Sets(_Elements):
+class _Sets(_Elements):
     def __init__(self):
         exp = "SETS"
         super().__init__(exp)
@@ -321,7 +321,7 @@ class Set(_Element):
         self.number = number
         self.members = members
 
-        attributes = (number, name, ', '.join(members))
+        attributes = (number, name, ', '.join([member.name for member in members]))
         super().__init__(name, attributes)
 
 # todo: determine how seeds should work. Does not fit number/name scheme

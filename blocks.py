@@ -37,9 +37,11 @@ class CreateBlock(Block):
 
 class QueueBlock(Block):
     def __init__(self, queue, capacity="", balk_label=""):
-        assert isinstance(queue, Queue)
-        mod = 'QUEUE, {}, {}, {}'.format(queue.name, capacity, balk_label)
-        super().__init__(mod, queue)
+        mod = 'QUEUE, {}, {}, {}'.format(queue, capacity, balk_label)
+        super().__init__(mod)
+        # assert isinstance(queue, Queue)
+        # mod = 'QUEUE, {}, {}, {}'.format(queue.name, capacity, balk_label)
+        # super().__init__(mod, queue)
 
 
 class TallyBlock(Block):
@@ -50,8 +52,10 @@ class TallyBlock(Block):
 
 class SeizeBlock(Block):
     def __init__(self, resource, priority=1.0, num_units=1):
-        mod = 'SEIZE, {}: {}, {}'.format(priority, resource.name, num_units)
-        super().__init__(mod, resource)
+        mod = 'SEIZE, {}: {}, {}'.format(priority, resource, num_units)
+        super().__init__(mod)
+        # mod = 'SEIZE, {}: {}, {}'.format(priority, resource.name, num_units)
+        # super().__init__(mod, resource)
 
     # For Repeats
     def add(self, resource_id="", num_units=""):
@@ -67,8 +71,10 @@ class DelayBlock(Block):
 
 class ReleaseBlock(Block):
     def __init__(self, resource, quantity_to_release=1):
-        mod = 'RELEASE: {}, {}'.format(resource.name, quantity_to_release)
-        super().__init__(mod, resource)
+        mod = 'RELEASE: {}, {}'.format(resource, quantity_to_release)
+        super().__init__(mod)
+        # mod = 'RELEASE: {}, {}'.format(resource.name, quantity_to_release)
+        # super().__init__(mod, resource)
 
     # For Repeats
     def add(self, resource_id="", quantity_to_release=""):
