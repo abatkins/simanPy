@@ -136,6 +136,29 @@ class SelectBlock(Block):
         super().__init__(mod)
 
 
+class PickQ(Block):
+    """Decides which QUEUE an arriving entity will join.
+
+       Queue selection rules:
+       CYC (cyclic priority), RAN (RANdom priority), POR (preferred order rule), LNB (Largest Number Busy),
+       SNB (Smallest number busy), LRC (largest remaining capacity), SRC (smallest remaining capacity)
+       """
+    def __init__(self, queue_rule='CYC', balk_label='', queue_label=[]):
+        mod = 'PICKQ, {}, {}: {}'.format(queue_rule, balk_label, ': '.join(queue_label))
+        super().__init__(mod)
+
+
+class QPick(Block):
+    """Selects from upstream queues for entity removal. Must be followed by HOLD/SEIZE block.
+
+       Queue selection rules:
+       CYC (cyclic priority), RAN (RANdom priority), POR (preferred order rule), LNB (Largest Number Busy),
+       SNB (Smallest number busy), LRC (largest remaining capacity), SRC (smallest remaining capacity)
+       """
+    def __init__(self, queue_rule='CYC', queue_label=[]):
+        mod = 'QPICK, {}: {}'.format(queue_rule, ': '.join(str(label) for label in queue_label))
+        super().__init__(mod)
+
 class StationBlock(Block):
     def __init__(self, begin_station_id, end_station_id=None):
         if end_station_id:
