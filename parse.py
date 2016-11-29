@@ -119,9 +119,11 @@ def aggregate_stats(data, alpha=.05):
 
     return agg_df
 
+
 def _compute_stats(vals, alpha=.05):
+    vals = [0.0 if val == '.00000' else float(val) for val in vals if val != '--']
     mean = np.mean(vals)
-    if len(vals.unique()) > 1:  # Compute CI
+    if len(np.unique(vals)) > 1:  # Compute CI
         lb, ub = stats.t.interval(1 - alpha, len(vals) - 1, loc=mean, scale=stats.sem(vals))
         ci = "({:.4f}, {:.4f})".format(float(lb), float(ub))
     else:  # Don't bother with CI if all values are the same.

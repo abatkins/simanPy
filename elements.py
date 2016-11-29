@@ -226,9 +226,15 @@ class Attribute(_Element):
 
 class Variable(_Element):
     def __init__(self, number="", name="", init_values=""):
+        inst_varname = name
+        if isinstance(init_values, list):
+            if '(' not in name:
+                inst_varname = name +'({})'.format(len(init_values))
+            init_values = ','.join([str(v) for v in init_values])
+
         self.init_values = init_values
 
-        attributes = (name, init_values)
+        attributes = (inst_varname, init_values)
         super().__init__(name, attributes, number)
 
 
@@ -260,36 +266,40 @@ class Storage(_Element):
 
 class Output(_Element):
     def __init__(self, number="", name="", expression="", output_file="", report_id=""):
-        self.number = number
+        #self.number = number
         self.expression = expression
         self.output_file = output_file
         self.report_id = report_id
 
-        attributes = (number, name, expression, output_file, report_id)
-        super().__init__(name, attributes)
+        #attributes = (number, name, expression, output_file, report_id)
+        attributes = (name, expression, output_file, report_id)
+        super().__init__(name, attributes, number)
 
 
 class Station(_Element):
     def __init__(self, number, name="", intersection_id="", recipe_id=""):
-        self.number = number
+        #self.number = number
         self.intersection_id = intersection_id
         self.recipe_id = recipe_id
 
-        attributes = (number, name, intersection_id, recipe_id)
-        super().__init__(name, attributes)
+        #attributes = (number, name, intersection_id, recipe_id)
+        attributes = (name, intersection_id, recipe_id)
+        super().__init__(name, attributes, number)
 
 
 class Sequence(_Element):
     def __init__(self, number="", name="", station_id="", variable=None, value=None):
-        self.number = number
+        #self.number = number
         self.steps = [[station_id, variable, value]]
 
-        attributes = [number, name, self.to_string(station_id, variable, value)]
-        super().__init__(name, attributes)
+        #attributes = [number, name, self.to_string(station_id, variable, value)]
+        attributes = [name, self.to_string(station_id, variable, value)]
+        super().__init__(name, attributes, number)
 
     def add(self, station_id="", variable="", value=""):
         self.steps.append([station_id, variable, value])
-        self.attributes[2] += ' & ' + self.to_string(station_id, variable, value)
+        #self.attributes[2] += ' & ' + self.to_string(station_id, variable, value)
+        self.attributes[1] += ' & ' + self.to_string(station_id, variable, value)
 
     def to_string(self, station_id, variable, value):
         if variable and value:
@@ -300,15 +310,16 @@ class Sequence(_Element):
 # todo: Fix string formatting. More complex than normal.
 class Transporter(_Element):
     def __init__(self, number="", name="", num_units=1, system_map_type="", velocity=1.0, init_position="", init_status="Active"):
-        self.number = number
+        #self.number = number
         self.num_units = num_units
         self.system_map_type = system_map_type
         self.velocity = velocity
         self.init_position = init_position
         self.init_status = init_status
 
-        attributes = (number, name, num_units, system_map_type, velocity, init_position, init_status)
-        super().__init__(name, attributes)
+        #attributes = (number, name, num_units, system_map_type, velocity, init_position, init_status)
+        attributes = (name, num_units, system_map_type, velocity, init_position, init_status)
+        super().__init__(name, attributes, number)
 
 
 #class Distance(_Element):
@@ -318,11 +329,12 @@ class Set(_Element):
     def __init__(self, number="", name="", members=[]):
         assert isinstance(members, (tuple, list))
 
-        self.number = number
+        #self.number = number
         self.members = members
 
-        attributes = (number, name, ', '.join([member.name for member in members]))
-        super().__init__(name, attributes)
+        #attributes = (number, name, ', '.join(members))
+        attributes = (name, ', '.join(members))
+        super().__init__(name, attributes, number)
 
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):

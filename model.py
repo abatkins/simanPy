@@ -1,5 +1,5 @@
 from elements import _Begin, _End, _Queues, _Entities, _Counters, _Resources, _Attributes, _Variables, _Dstats, \
-    _Tallies, _Storages, _Outputs, _Stations, _Sets
+    _Tallies, _Storages, _Outputs, _Stations, _Sets, _Sequences
 import subprocess
 
 
@@ -24,14 +24,14 @@ class Model:
             self.mod.append(obj)
         elif obj.type == "exp":  # Elements block
             self.exp.append(obj)
-        elif obj.type == "element":  # Element blockS
+        elif obj.type == "element":  # Element block
             self._add_element(obj)
         else:
             raise ValueError("Extension type %s is not recognized" % obj.type)
 
     def _to_collection(self, key, elements_inst, element):
         collection = self.collections.get(key, elements_inst)
-        if element.number == "":
+        if element.number == "" or element.number is None:
             element.number = len(collection.elements) + 1
         collection.add(element)
         self.collections[key] = collection
@@ -63,6 +63,8 @@ class Model:
             self._to_collection(key, _Stations(), element)
         elif key == "Set":
             self._to_collection(key, _Sets(), element)
+        elif key == "Sequence":
+            self._to_collection(key, _Sequences(), element)
         else:
             raise ValueError("Class name not recognized!")
 

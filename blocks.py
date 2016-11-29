@@ -111,10 +111,9 @@ class BranchBlock(Block):
 class AssignBlock(Block):
     """Name can be a SIMAN variable or attribute.
     Used for modifying an existing variable or attribute element"""
-    def __init__(self, var_or_attr, value):
-        assert isinstance(var_or_attr, (Attribute, Variable))
-        mod = 'ASSIGN: {} = {}'.format(var_or_attr.name, value)
-        super().__init__(mod, var_or_attr)
+    def __init__(self, var_or_attr_id, value):
+        mod = 'ASSIGN: {} = {}'.format(var_or_attr_id, value)
+        super().__init__(mod)
 
     # For Repeats
     def add(self, name, value):
