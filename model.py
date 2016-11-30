@@ -1,5 +1,5 @@
 from elements import _Begin, _End, _Queues, _Entities, _Counters, _Resources, _Attributes, _Variables, _Dstats, \
-    _Tallies, _Storages, _Outputs, _Stations, _Sets, _Sequences
+    _Tallies, _Storages, _Outputs, _Stations, _Sets, _Sequences, _Pictures
 import subprocess
 
 
@@ -65,6 +65,8 @@ class Model:
             self._to_collection(key, _Sets(), element)
         elif key == "Sequence":
             self._to_collection(key, _Sequences(), element)
+        elif key == "Picture":
+            self._to_collection(key, _Pictures(), element)
         else:
             raise ValueError("Class name not recognized!")
 

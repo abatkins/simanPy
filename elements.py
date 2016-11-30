@@ -134,6 +134,11 @@ class _Transporters(_Elements):
         super().__init__(exp)
 
 
+class _Pictures(_Elements):
+    def __init__(self):
+        exp = "PICTURES"
+        super().__init__(exp)
+
 #class _Distances(_Elements):
 #    def __init__(self):
 #        exp = "DISTANCES"
@@ -336,6 +341,7 @@ class Set(_Element):
         attributes = (name, ', '.join(members))
         super().__init__(name, attributes, number)
 
+
 # todo: determine how seeds should work. Does not fit number/name scheme
 class Seed(_Element):
     def __init__(self, name="", seed_value="", init_option="No"):
@@ -346,9 +352,15 @@ class Seed(_Element):
         super().__init__(name, attributes)
 
 
+class Picture(_Element):
+    def __init__(self, name):
+        attributes = (name,)
+        super().__init__(name, attributes)
+
+
 # todo: include other attributes
 class Entity(_Element):
     """Entity storage class"""
-    def __init__(self, name=""):
-        attributes = [name]
+    def __init__(self, name, picture=""):
+        attributes = [name, picture]
         super().__init__(name, attributes)
