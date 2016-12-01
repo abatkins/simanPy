@@ -69,15 +69,16 @@ def parse(infile):
     ).apply(pd.to_numeric, args=('ignore',))
 
     # Output to csv
-    data['TALLY VARIABLES'].to_csv('tally.csv')
-    data['DISCRETE-CHANGE VARIABLES'].to_csv('dstat.csv')
-    data['COUNTERS'].to_csv('counters.csv')
+    outfile = infile.split('.')[0]
+    data['TALLY VARIABLES'].to_csv(outfile + '_tally.csv')
+    data['DISCRETE-CHANGE VARIABLES'].to_csv(outfile + '_dstat.csv')
+    data['COUNTERS'].to_csv(outfile + '_counters.csv')
 
-    return data
+    return data, outfile
 
 # Creates df/csv with aggregate statistics over all replications. Includes mean and confidence intervals.
 # Note: Use the to_latex method to output the df to a latex table.
-def aggregate_stats(data, alpha=.05):
+def aggregate_stats(data, outfile_name=None, alpha=.05):
     results = []
     for df in data.values():
         names = df.identifier.unique()
@@ -115,7 +116,7 @@ def aggregate_stats(data, alpha=.05):
                                    'max',
                                    'obs', '{}% CI'.format(int((1 - alpha) * 100))
                                    ])
-    agg_df.to_csv('aggregate.csv')
+    agg_df.to_csv(outfile_name + '_aggregate.csv')
 
     return agg_df
 
@@ -137,8 +138,8 @@ if __name__ == "__main__":
     parser.add_argument('--latex', '-l', action='store_true', help='Print Latex Table')
 
     args = parser.parse_args()
-    data = parse(args.infile)
-    agg = aggregate_stats(data)
+    data, outfile = parse(args.infile)
+    agg = aggregate_stats(data, outfile)
 
     if args.latex:
         print(agg.to_latex())
